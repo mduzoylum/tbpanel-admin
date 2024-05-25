@@ -1,0 +1,140 @@
+{
+  "success": true,
+  "message": "Trafik Verisi",
+  "total": 100,
+  "data": [
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    },
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    },
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    },
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    },
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    },
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    },
+    {
+      "code" : "PASOMIA-062",
+      "name": "Pasomia 062 Garson Triko",
+      "attributes":   [
+        {
+          "name": "Renk",
+          "value": "Siyah/Beyaz"
+        }
+      ],
+      "desired_stock": 10,
+      "stock": 10,
+      "unit" : "Koli",
+      "image_url" : "https://fabrika.toptancimburada.com/cdn/O/Resim/Tomkids/Tomkids_F_018_anrk_siyah_beyaz_1.jpg",
+      "status" : {
+        "key" : "pending",
+        "title" : "Bekleniyor",
+        "color" : "#07afff"
+      }
+    }
+  ]
+}
