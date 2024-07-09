@@ -1,7 +1,7 @@
 export default defineNuxtPlugin((nuxtApp) => {
 
     const config = useRuntimeConfig();
-    let BASE_URL = config.public.API_URL || 'http://localhost:3000';
+    let BASE_URL = config.public.API_URL || 'http://localhost:8083';
     BASE_URL = BASE_URL.replace('/\/$/', '');
 
     const {$i18n}  = useNuxtApp();

@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
         const token = $getToken(to);
 
         if (!token || token === '') {
-       //     return navigateTo('/auth/login')
+            return navigateTo('/auth/login')
         }
     } else {
         const {$getToken} = useNuxtApp();

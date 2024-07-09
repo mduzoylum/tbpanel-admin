@@ -1,56 +1,38 @@
 <template>
+  <div class="static min-h-screen flex">
+    <div
+        class=" overflow-x-auto relative bg-opacity-70 flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-800 z-20">
+      <header class='mt-10'>
+        <div class="absolute top-0 right-0 h-16">
 
-  fdfd
+        </div>
+      </header>
 
-  <div class=" font-barlow">
-    <div class="  flex flex-col flex-1">
+      <slot/>
 
-      <main class="flex-1 ">
-        <slot/>
-      </main>
-      <div
-          class="bg-indigo-500 text-indigo-500 bg-yellow-500 text-yellow-500 bg-blue-500 text-blue-500 bg-green-500 text-green-500 text-red-500 bg-red-500 "></div>
+      <footer class="mt-12">
+        <div class='absolute bottom-8 space-x-8 justify-items-end grid grid-cols-3'>
+
+        </div>
+      </footer>
     </div>
+
+    <img class="absolute inset-0 h-full w-full object-cover z-0" src="/bg.png" alt=""/>
   </div>
 </template>
 
+
 <script setup>
 
-const {$isDarkMode} = useNuxtApp();
-
-const { locale } = useI18n();
 
 useHead({
   bodyAttrs: {
-    class: 'h-full bg-white dark:bg-slate-800 dark:text-white'
+    class: 'h-full '
   },
   htmlAttrs: {
-    class: 'h-full' + ($isDarkMode == 1 ? ' dark' : ''),
-    dir: locale.value === 'ar' ? 'rtl' : 'ltr'
+    class: 'h-full',
+    dir: localStorage.getItem("store-language") == 'ar' ? 'rtl' : 'ltr'
   },
-  title: 'ToptancımBurada Fabrika Paneli',
-  link: []
+  title: 'Toptancım Burada',
 })
-
-</script>
-
-<script>
-export default {
-  mounted() {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const currentPage = this.$route.name;
-
-      const message = {
-        page: currentPage,
-        params: Object.fromEntries(params.entries()),
-      };
-
-      console.log(message)
-      window.parent.postMessage(message, '*');
-    } catch (e) {
-
-    }
-  }
-}
 </script>
