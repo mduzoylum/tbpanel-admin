@@ -5,7 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     let lang = route.query?.lang ?? (localStorage.getItem('language') ?? 'en');
 
     if (['tr', 'en', 'ar'].indexOf(<string>lang) === -1) {
-        lang = 'en'
+        lang = 'tr'
     }
 
     const { $i18n } = useNuxtApp();

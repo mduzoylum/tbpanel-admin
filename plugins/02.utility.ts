@@ -21,10 +21,6 @@ const getColor = () => {
     const route = useRoute();
     let allowedThemes = ['blue', 'yellow', 'indigo', 'green', 'red', 'orange', 'amber'];
 
-    if(route.query.theme && allowedThemes.includes(route.query.theme)) {
-        window.localStorage.setItem('store-theme', route.query.theme);
-        return route.query.theme;
-    }
 
     const theme = window.localStorage.getItem('store-theme') ?? 'orange';
 
