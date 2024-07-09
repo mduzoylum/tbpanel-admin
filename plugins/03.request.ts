@@ -20,7 +20,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             if(response.status == 401 || response.status == 403) {
                 localStorage.removeItem('token');
                 const msg = response._data.message ?? 'Hata Oluştu';
-                return navigateTo('/auth/error?msg='+msg);
+                return navigateTo('/auth/login');
             }
         }
     })

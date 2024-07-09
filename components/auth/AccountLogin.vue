@@ -33,7 +33,7 @@
           </div>
 
           <NuxtLink to="/auth/recover?type=accounts" class="text-sm font-medium text-white hover:text-green-500">
-            {{ $t('auth.forgotPassword') }}
+            {{ $t('auth.forgetPassword') }}
           </NuxtLink>
           <NuxtLink v-if="isRegisterPageActive" to="/auth/register" class="text-sm font-medium text-white hover:text-green-500">
             {{ $t('connective.or') }} {{ $t('auth.register') }}

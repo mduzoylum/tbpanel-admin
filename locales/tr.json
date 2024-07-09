@@ -1,8 +1,12 @@
 {
+  "warning" : "Uyarı",
   "auth" : {
     "email" : "E-posta",
     "password" : "Şifre",
     "login" : "Giriş Yap",
-    "forgotPassword" : "Şifremi Unuttum"
+    "forgetPassword" : "Şifremi Unuttum"
+  },
+  "button" : {
+    "send" : "Gönder"
   }
 }

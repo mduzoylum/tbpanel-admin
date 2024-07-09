@@ -2,7 +2,7 @@
 <template>
   <div class="mx-auto w-full max-w-sm lg:w-96">
     <div class="grid grid-cols-1 ">
-      <img class="w-auto" src="/logo-dark.png" alt="Workflow" />
+      <img class="w-auto" src="/logo-dark.png" :alt="this.$config.public.APP_NAME" />
     </div>
     <div class="mt-8">
       <div class="mt-6">
@@ -16,7 +16,6 @@
 export default {
     data(){
         return {
-            config : null
         }
     },
     methods : {
