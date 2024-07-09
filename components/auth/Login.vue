@@ -58,13 +58,6 @@ export default {
   },
 
   methods: {
-    storeUserData(data) {
-      window.localStorage.setItem('bearer-token', data.token);
-      window.localStorage.setItem('user', JSON.stringify(data.name))
-      window.localStorage.setItem('email', JSON.stringify(data.email))
-      window.localStorage.setItem('loginDate', data.token_iat)
-      window.localStorage.setItem('tokenExp', data.token_exp)
-    },
     login() {
       let self = this;
       self.saving = true;
@@ -76,7 +69,7 @@ export default {
           password: this.password,
         }
       }).then(function (response) {
-        self.storeUserData(response.data);
+        self.$setSessionData(response.data);
         self.$refs.notification.success(self.$t('success_login'));
         setTimeout(() => {
 
@@ -88,74 +81,11 @@ export default {
 
       }).catch(err => {
         console.log(err)
-        console.log(err.data())
         self.$refs.notification.error(err.data.message);
       }).finally(() => {
         self.saving = false;
       });
     },
-    async verifyOtp() {
-      if (this.saving) return;
-
-      if (!this.otpData || this.otpData?.length < 6) {
-        return this.$refs.notification.error(this.$t("message.invalid_otp"));
-      }
-
-      try {
-        this.saving = true;
-        const res = await this.$apiFetch("login/mfa-verify", {
-          method: "POST",
-          body: {
-            hash: this.otpHash,
-            otp: this.otpData,
-            method: this.selectedMfaMethod,
-          },
-
-        });
-        if (res.status) {
-          this.$refs.notification.success(res.message);
-          this.$refs.otpVerifyModal.hide();
-          this.storeUserData(res.data);
-          this.$refs.notification.success(this.$t('success_login'));
-          setTimeout(() => {
-            window.location.reload();
-          }, 200)
-        } else {
-          this.$refs.notification.error(res.message);
-        }
-      } catch (error) {
-        this.$refs.notification.error(error.data.message);
-      } finally {
-        this.saving = false;
-      }
-
-    },
-    async sendOtp(method) {
-      try {
-        const res = await this.$apiFetch("login/mfa-send-otp", {
-          method: "POST",
-          body: {
-            email: this.email,
-            password: this.password,
-            method: this.selectedMfaMethod,
-          },
-        });
-        if (res.status) {
-          this.$refs.notification.success(res.message);
-          ({methods: this.mfaMethods, hash: this.otpHash} = res.data);
-        } else {
-          this.$refs.notification.error(res.message);
-        }
-      } catch (error) {
-        this.$refs.notification.error(error.data.message);
-      }
-    },
-    changeSelectedMfa(mfaMethod) {
-      this.$refs.formOtp.reset();
-      this.$refs.useAnotherMfaModal.hide();
-      this.selectedMfaMethod = mfaMethod;
-      this.sendOtp(mfaMethod);
-    }
   },
   mounted() {
 

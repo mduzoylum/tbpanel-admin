@@ -7,6 +7,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         provide: {
             date: dayjs,
             getToken,
+            setSessionData,
+            getSessionData,
             color : color,
             isNull,
             isDarkMode : isDarkMode(),
@@ -89,4 +91,18 @@ const getToken = (route) => {
     }
 
     return token;
+}
+
+const setSessionData = (data) => {
+    window.localStorage.setItem('token', data.token);
+    window.localStorage.setItem('user', data.name + ' ' + data.surname)
+    window.localStorage.setItem('email', data.email)
+    window.localStorage.setItem('permissions', JSON.stringify(data.permissions))
+    window.localStorage.setItem('loginDate', data.token_iat)
+    window.localStorage.setItem('tokenExp', data.token_exp)
+}
+
+
+const getSessionData = (key) => {
+    return window.localStorage.getItem(key) || '';
 }

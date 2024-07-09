@@ -19,7 +19,7 @@
             </TransitionChild>
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
               <div class="flex-shrink-0 flex items-center px-4">
-                <img class="w-auto" src="/logo.png" alt="Toptancım Burada"/>
+                <img class="w-auto" src="/logo.png" :alt="this.$config.public.APP_NAME"/>
               </div>
               <nav class="mt-5 px-2 space-y-1">
                 <a v-for="item in navigation" :key="item.name" :href="item.href"
