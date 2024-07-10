@@ -53,7 +53,7 @@ export default {
       let self = this;
       self.saving = true;
 
-      this.$apiFetch('forgot-password', {
+      this.$apiFetch('auth/forgot-password', {
         method: "POST",
         body: {
           email: this.email,
@@ -61,12 +61,8 @@ export default {
         }
       }).then(function (response) {
 
-        if (!response.status) {
-          self.$refs.notification.error(response.message);
-        } else {
-          self.$refs.notification.success(response.message);
-          self.email = '';
-        }
+        self.$refs.notification.success(response.message);
+        self.email = '';
 
       }).catch(err => {
         self.$refs.notification.error(err.data.message);

@@ -1,7 +1,7 @@
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
 
     const config = useRuntimeConfig();
-    let BASE_URL = config.public.API_URL || 'http://localhost:8083';
+    let BASE_URL = config.public.API_URL || 'http://localhost:8083/admin';
     BASE_URL = BASE_URL.replace('/\/$/', '');
 
     const {$i18n}  = useNuxtApp();
@@ -16,10 +16,9 @@ export default defineNuxtPlugin((nuxtApp) => {
             'Authorization' : `Bearer ${(token || '')}`,
             'Accept-Language': $i18n.locale.value || 'en',
         },
-        async onResponse({ request, response, options }) {
+        async onResponse({response }) {
             if(response.status == 401 || response.status == 403) {
                 localStorage.removeItem('token');
-                const msg = response._data.message ?? 'Hata Oluştu';
                 return navigateTo('/auth/login');
             }
         }

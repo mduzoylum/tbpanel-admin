@@ -29,7 +29,7 @@
           </div>
 
           <NuxtLink to="/auth/recover" class="text-sm font-medium text-white hover:text-blue-600">
-            {{ $t('auth.forgetPassword') }}
+            {{ $t('auth.forgotPassword') }}
           </NuxtLink>
         </div>
       </div>

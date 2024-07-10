@@ -4,30 +4,30 @@
     <form @submit.prevent="resetPassword">
       <div class="space-y-6">
         <div>
-          <label for="email" class="block text-sm font-medium text-white"> {{ $t('register.email') }} </label>
-          <input type="email" v-model="email" id="email"
-                 class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"/>
+          <label for="email" class="block text-sm font-medium text-white"> {{ $t('auth.email') }} </label>
+          <input type="email" v-model="email" id="email" disabled
+                 class="block  w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-gray-400 border border-gray-400 rounded-md dark:placeholder-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"/>
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-white"> {{ $t('register.password') }} </label>
+          <label for="email" class="block text-sm font-medium text-white"> {{ $t('auth.password') }} </label>
           <input type="password" v-model="password" id="password"
                  class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"/>
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-white"> {{ $t('register.passwordAgain') }} </label>
-          <input type="password" v-model="repassword" id="repassword"
+          <label for="email" class="block text-sm font-medium text-white"> {{ $t('auth.passwordAgain') }} </label>
+          <input type="password" v-model="rePassword" id="rePassword"
                  class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"/>
         </div>
         <div class="flex items-center justify-between">
           <div>
             <button :disabled='saving' type="submit"
-                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-700">
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700">
               <UiSpinner v-if="saving"></UiSpinner>
-              {{ $t('button.send') }}
+              {{ $t('button.save') }}
             </button>
           </div>
 
-          <NuxtLink to="/auth/login" class="text-sm font-medium text-white hover:text-green-600">
+          <NuxtLink to="/auth/login" class="text-sm font-medium text-white hover:text-blue-600">
             {{ $t('auth.login') }}
           </NuxtLink>
         </div>
@@ -44,10 +44,10 @@
 export default {
   data() {
     return {
-      email: this.$route.query.email || "",
-      renew_code: "",
+      email: "",
+      token: "",
       password: "",
-      repassword: "",
+      rePassword: "",
     };
   },
   email: function (val) {
@@ -59,24 +59,19 @@ export default {
 
       let self = this;
 
-      this.$apiFetch('reset-password', {
+      this.$apiFetch('auth/reset-password', {
         method: "POST",
         body: {
           email: this.email,
           token: this.token,
           password: this.password,
-          password_confirmation: this.repassword,
-          type: this.$route.query.type || 'users'
+          password_confirmation: this.rePassword
         }
       }).then(function (response) {
-        if (!response.status) {
-          self.$refs.notification.error(response.message);
-        } else {
-          self.$refs.notification.success(response.message);
-          setTimeout(function () {
-            self.$route.query.type === 'accounts' ? navigateTo('/accounts/auth/login/') : navigateTo('/auth/login');
-          }, 1500);
-        }
+        self.$refs.notification.success(response.message);
+        setTimeout(function () {
+          navigateTo('/auth/login');
+        }, 1500);
 
       }).catch(err => {
         self.$refs.notification.error(err.data.message);
@@ -88,12 +83,13 @@ export default {
   },
   mounted() {
 
-    if (!this.$route.query.reset_token) {
+    if (!this.$route.query.reset_token || !this.$route.query.email) {
       this.$router.push('/auth/login')
       return false;
     }
 
     this.token = this.$route.query.reset_token;
+    this.email = this.$route.query.email;
   }
 };
 </script>

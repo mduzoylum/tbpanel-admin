@@ -1,12 +1,37 @@
 {
   "warning" : "Uyarı",
+  "success_login" : "Giriş başarılı",
+  "general" : {
+    "success_msg" : "İşlem başarılı"
+  },
   "auth" : {
     "email" : "E-posta",
     "password" : "Şifre",
     "login" : "Giriş Yap",
-    "forgetPassword" : "Şifremi Unuttum"
+    "forgotPassword" : "Şifremi Unuttum",
+    "resetPassword" : "Şifremi Sıfırla",
+    "enterNewPassword" : "Yeni Şifrenizi Belirleyin",
+    "passwordAgain" : "Şifre Tekrar"
   },
   "button" : {
-    "send" : "Gönder"
+    "send" : "Gönder",
+    "save" : "Kaydet",
+    "cancel" : "İptal",
+    "close" : "Kapat",
+    "delete" : "Sil",
+    "edit" : "Düzenle",
+    "add" : "Ekle",
+    "create" : "Oluştur",
+    "update" : "Güncelle",
+    "yes" : "Evet",
+    "no" : "Hayır",
+    "confirm" : "Onayla",
+    "back" : "Geri",
+    "next" : "İleri",
+    "finish" : "Bitir",
+    "search" : "Ara",
+    "upload" : "Yükle",
+    "download" : "İndir",
+    "print" : "Yazdır"
   }
 }
