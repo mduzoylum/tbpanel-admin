@@ -9,6 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             getToken,
             setSessionData,
             getSessionData,
+            logout,
             color : color,
             isNull,
             isDarkMode : isDarkMode(),
@@ -20,7 +21,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 const getColor = () => {
 
-    const route = useRoute();
     let allowedThemes = ['blue', 'yellow', 'indigo', 'green', 'red', 'orange', 'amber'];
 
 
@@ -105,4 +105,15 @@ const setSessionData = (data) => {
 
 const getSessionData = (key) => {
     return window.localStorage.getItem(key) || '';
+}
+
+const logout = () => {
+    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('user')
+    window.localStorage.removeItem('email')
+    window.localStorage.removeItem('permissions')
+    window.localStorage.removeItem('loginDate')
+    window.localStorage.removeItem('tokenExp')
+
+    window.location.href = '/auth/login';
 }

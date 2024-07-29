@@ -8,6 +8,7 @@
     "email" : "E-posta",
     "password" : "Şifre",
     "login" : "Giriş Yap",
+    "logout" : "Çıkış Yap",
     "forgotPassword" : "Şifremi Unuttum",
     "resetPassword" : "Şifremi Sıfırla",
     "enterNewPassword" : "Yeni Şifrenizi Belirleyin",

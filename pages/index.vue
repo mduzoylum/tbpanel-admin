@@ -1,10 +1,4 @@
 <template>
-  <div class="mx-auto px-2 sm:px-4 md:px-5">
-    <h1 class="text-2xl font-semibold text-gray-900">Anasayfa</h1>
-  </div>
-
-
-
   <div class="mx-auto sm:px-6 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
 
     <main class="lg:col-span-9 xl:col-span-8">
@@ -92,27 +86,8 @@
     <aside class="hidden xl:block xl:col-span-4">
       <div class="sticky top-4 space-y-4">
         <section aria-labelledby="trending-heading">
-          <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <div class="bg-white overflow-hidden shadow rounded-lg">
-              <div class="p-5">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0">
-                    <!-- Heroicon name: outline/scale -->
-                    <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                    </svg>
-                  </div>
-                  <div class="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt class="text-sm font-medium text-gray-500 truncate">Account balance</dt>
-                      <dd>
-                        <div class="text-lg font-medium text-gray-900">$30,659.45</div>
-                      </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-2">
+
             <div class="bg-white overflow-hidden shadow rounded-lg">
               <div class="p-5">
                 <div class="flex items-center">
@@ -155,7 +130,7 @@
             </div>
 
           </div>
-          <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-1">
             <div class="bg-white overflow-hidden shadow rounded-lg">
               <div class="p-5">
                 <div class="flex items-center">
