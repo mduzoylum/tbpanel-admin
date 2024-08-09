@@ -121,6 +121,7 @@ const navigation = [
   {name: 'Satış', href: '#', icon: ChartBarIcon, current: false},
   {name: 'Alış', href: '#', icon: ChartPieIcon, current: false},
   {name: 'Kullanıcılar', href: '#', icon: UsersIcon, current: false},
+  {name: 'Mesajlar', href: 'message', icon: ShoppingBagIcon, current: false},
 ]
 
 export default {
