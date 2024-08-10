@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
 
-    <form @submit.prevent="login">
+    <form @submit.prevent="login" ref="loginForm">
       <div class="space-y-6">
 
         <div>
@@ -64,6 +64,7 @@ export default {
 
       this.$apiFetch('auth/login', {
         method: "POST",
+        form : this.$refs.loginForm,
         body: {
           email: this.email,
           password: this.password,
@@ -72,7 +73,6 @@ export default {
         self.$setSessionData(response.data);
         self.$refs.notification.success(self.$t('success_login'));
         setTimeout(() => {
-
           if (localStorage.getItem('last-page') != null)
             window.location.href = localStorage.getItem('last-page')
           else
@@ -80,7 +80,6 @@ export default {
         }, 200)
 
       }).catch(err => {
-        console.log(err)
         self.$refs.notification.error(err.data.message);
       }).finally(() => {
         self.saving = false;

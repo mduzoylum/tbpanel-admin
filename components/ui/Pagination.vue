@@ -11,18 +11,18 @@
     <div class="hidden sm:flex justify-between items-center w-full" :class="{'flex-col gap-1':size=='small'}">
       <div>
         <p class="text-gray-700 dark:text-slate-400" :class="[size=='small'?'text-xs':'text-sm']">
-          {{ $t('main.total') }} {{ total }} {{ $t('main.from_the_recording') }} {{ ((current_page-1) * limit) + 1 }} -  {{ (current_page) * limit < total ?  (current_page) * limit : total }} {{ $t('main.showing') }}
+          {{ total }} kayıttan {{ ((current_page-1) * limit) + 1 }} -  {{ (current_page) * limit < total ?  (current_page) * limit : total }} arası görüntüleniyor.
         </p>
       </div>
       <div>
         <nav class="relative z-0 inline-flex rounded-md gap-1 dark:text-slate-400" aria-label="Pagination">
           <button :disabled="current_page == 1" @click="current_page = 1" class="py-1 border rounded-md dark:border-gray-600"
             :class="[size=='small'?'px-2 text-xs':'text-sm font-medium px-3']">
-            <i class="la" :class="{'la-angle-double-left' : !$rtl , 'la-angle-double-right' : $rtl}"></i>
+            <<
           </button>
           <button :disabled="current_page == 1" @click="current_page--" class="py-1 border rounded-md dark:border-gray-600 "
             :class="[size=='small'?'px-2 text-xs':'text-sm font-medium px-3']">
-            <i class="la" :class="{'la-angle-left' : !$rtl , 'la-angle-right' : $rtl}"></i>
+            <
           </button>
           <div v-if="total_page < 6" class="flex gap-1">
             <button v-for="index in total_page" :key="index" @click="current_page = index" v-html="index"
@@ -36,11 +36,11 @@
           </div>
           <button :disabled="current_page == total_page" @click="current_page++" class="border rounded-md dark:border-gray-600"
             :class="[size=='small'?'px-2 text-xs':'text-sm font-medium px-3']">
-            <i class="la" :class="{'la-angle-right' : !$rtl , 'la-angle-left' : $rtl}"></i>
+            >
           </button>
           <button :disabled="current_page == total_page" @click="current_page = total_page" class="py-1 border rounded-md dark:border-gray-600"
             :class="[size=='small'?'px-2 text-xs':'text-sm font-medium px-3']">
-            <i class="la" :class="{'la-angle-double-right' : !$rtl , 'la-angle-double-left' : $rtl}"></i>
+            >>
           </button>
         </nav>
       </div>
@@ -76,6 +76,7 @@ export default{
     },
     watch : {
       current_page(value){
+        console.log(value)
         this.$emit('change',value)
         this.$emit('update:modelValue',value)
       },

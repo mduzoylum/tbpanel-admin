@@ -5,16 +5,38 @@
         <UiDataHeader
             :title="title"
             :config="config"
-            :titleIcon="titleIcon" v-if="!noheader && !error.license"
+            :titleIcon="titleIcon" v-if="!noheader"
             :size="size=='xsmall'?'small' : 'default'"
             @events="actions">
           <template #actions>
+            <button  v-if="config.filters && config.filters?.length > 0 "
+                :class="filterOpen ? 'bg-gray-100 bg-opacity-50 dark:bg-slate-800'    : 'text-opacity-90 bg-gray-100 bg-opacity-50 dark:bg-slate-900'"
+                class="px-3 h-9 flex items-center  text-gray-700 dark:text-slate-400  text-sm rounded-md   ltr:ml-2 rtl:mr-2 focus:outline-none"
+                @click="filterOpen = !filterOpen"
+            >
+              <i class="la la-filter mr-1"></i>
+              <span>Filtreler</span>
+              <div v-if="activeFilterCount > 0 " class="rounded-full h-5 bg-blue-500 text-white text-xs px-2 ml-1">
+                {{ activeFilterCount }}
+              </div>
+            </button>
+
             <slot name="actions"></slot>
           </template>
         </UiDataHeader>
         <slot name="filter"></slot>
       </div>
-      <div class=" bg-white dark:bg-slate-800 shadow rounded-md  overflow-hidden border border-gray-200 dark:border-gray-600" v-if="!error.license">
+
+      <Filters
+          :open="filterOpen"
+          :filters="config.filters ?? []"
+          @filter="filter($event)"
+          @filterChange="activeFilterCount = $event"
+          @closeFilters="filterOpen = false"
+      />
+
+
+      <div class=" bg-white dark:bg-slate-800 shadow rounded-md  overflow-hidden border border-gray-200 dark:border-gray-600">
         <div class="-my-2 overflow-x-auto ">
           <UiEmpty v-if="!hasData && loader == false" :button="true"/>
           <div class="py-2 align-middle inline-block min-w-full " v-if="loader">
@@ -61,7 +83,7 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white  divide-y divide-gray-200 dark:divide-gray-600 dark:bg-slate-800 dark:text-slate-200">
-                <tr v-for="(item, index) in data[mapping.data]" @click="rowClick(item, index)" :key="index" class="cursor-pointer hover:bg-orange-50 dark:hover:bg-slate-700 group"
+                <tr v-for="(item, index) in data" @click="rowClick(item, index)" :key="index" class="cursor-pointer hover:bg-orange-50 dark:hover:bg-slate-700 group"
                     :class="{ 'bg-orange-50 dark:bg-slate-700': selectedRowId && selectedRowId == item.id }">
                   <td class=" text-center text-gray-600 px-3" v-if="config.indexable">
                     {{ index + 1 }}
@@ -106,10 +128,10 @@
               </table>
             </div>
 
-            <UiPagination v-if="hasData && data.paging && data.paging.total > data.paging.limit"
+            <UiPagination v-if="hasData && paging && paging.total > paging.limit"
                           ref="pagination"
                           class="p-2"
-                          :data="data.paging" @change="get" v-model="currentPage"
+                          :data="paging" @change="get" v-model="currentPage"
                           :size="size =='xsmall' ? 'small' :'default' "
             />
           </div>
@@ -130,6 +152,8 @@
 </template>
 
 <script>
+
+import {data} from "autoprefixer";
 
 export default {
   props: {
@@ -170,7 +194,7 @@ export default {
       type: Object,
       default: {
         data: 'data',
-        total: 'total'
+        paging: 'paging'
       }
     },
     autoload: {
@@ -185,9 +209,14 @@ export default {
       error: {
         license: false
       },
-      data: {},
+      filterOpen: false,
+      activeFilterCount: 0,
+      data: [],
+      paging: {
+        total: 0,
+        limit: this.config.limit || 25,
+      },
       loader: false,
-      limit: 10,
       sort: {
         column: '-id',
       },
@@ -219,7 +248,7 @@ export default {
   },
   computed: {
     hasData() {
-      return this.data[this.mapping.data] && this.data[this.mapping.data].length > 0
+      return this.data && this.data.length > 0
     },
     hasSticky() {
       return this.config.actions && this.config.actions.filter(action => action.location == 'sticky').length > 0
@@ -237,16 +266,27 @@ export default {
         if (page == 1) {
           self.start = 0;
         } else {
-          self.start = (page - 1) * self.limit;
+          self.start = (page - 1) * self.paging.limit;
         }
         query.searchParams.set('start', self.start);
       }
 
+      console.log('requestBody', this.requestBody)
+
+
       query.searchParams.set('sort', this.config.sort || this.sort.column);
-      query.searchParams.set('limit', this.config.limit || this.limit);
-      query.searchParams.set('search', this.requestBody.search ?? '');
+      query.searchParams.set('limit', this.paging.limit);
+      query.searchParams.set('search', this.requestBody.search ?? '')
+
+      if(this.requestBody.filters){
+        for (let key in this.requestBody.filters) {
+          query.searchParams.set(`filters[${key}]`, this.requestBody.filters[key]);
+        }
+
+      }
 
       let url = query.pathname + query.search;
+      url = decodeURIComponent(url);
 
       this.loader = true;
 
@@ -254,28 +294,13 @@ export default {
         method: this.apiOpts.method,
       };
 
-      if (this.apiOpts.method === 'POST') {
-        options.body = JSON.stringify(this.requestBody);
-      }
-
       try {
-        this.data = await this.$apiFetch(url, options);
-      } catch (e) {
-        if (e.data.error) {
-          this.$emit('status', {'status': false})
-        }
-        if (e.data.message) {
-          if (e.data.message.includes('Lisans')) {
-            this.error.license = true;
-          }
-        }
-      }
+        let response = await this.$apiFetch(url, options);
+        this.data = response[this.mapping.data];
 
-      if (!this.data.paging) {
-        this.data.paging = {
-          total: this.data[this.mapping.total],
-          limit: this.data.limit || 10,
-        }
+        this.paging = response[this.mapping.paging];
+      } catch (e) {
+        this.$refs.notification.error(e.data.message);
       }
 
       this.loader = false;
@@ -296,26 +321,6 @@ export default {
         })
       });
     },
-
-    removeAccount(item) {
-      let self = this;
-      this.$refs.cleaner.confirm(item, function (id) {
-        const urlParts = self.api.split("?");
-        const baseUrl = urlParts[0];
-        const queryParams = new URLSearchParams(urlParts[1]);
-        const apiUrl = `${baseUrl}/${id}?${queryParams.toString()}`;
-
-        this.$apiFetch(`${apiUrl}`, {method: 'DELETE'}).then((r) => {
-          if (r.success) {
-            self.$refs.notification.success(self.$t('general.delete_successful'));
-            self.get();
-          }
-        }).catch((e) => {
-          self.$refs.notification.error(e.data.message);
-        })
-      });
-    },
-
     rowClick(item, index) {
       if (!this.config.selectable) {
         this.selectedRowId = item.id;
@@ -346,7 +351,8 @@ export default {
 
 
           this.currentPage = 1;
-          this.requestBody = {...params, ...this.requestBody}
+          this.requestBody.filters = params;
+
           this.get()
           break;
 
@@ -404,13 +410,15 @@ export default {
       this.config.columns = cols;
     },
 
-    filter(filter) {
-      if (filter == null) {
+    filter(filters) {
+
+      this.filterOpen = false;
+      if (filters == null) {
         this.url = this.api;
         return this.get();
       }
 
-      this.actions('filter', filter);
+      this.actions('filter', filters);
     },
 
     // tree column

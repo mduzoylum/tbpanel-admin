@@ -11,7 +11,7 @@ export default defineNuxtPlugin(() => {
     console.log($i18n.locale)
 
     const request = $fetch.create({
-        baseURL: `${BASE_URL}/`,
+        baseURL: `${BASE_URL}/admin/`,
         headers : {
             'Authorization' : `Bearer ${(token || '')}`,
             'Accept-Language': $i18n.locale.value || 'en',
