@@ -9,31 +9,11 @@
             :size="size=='xsmall'?'small' : 'default'"
             @events="actions">
           <template #actions>
-            <button  v-if="config.filters && config.filters?.length > 0 "
-                :class="filterOpen ? 'bg-gray-100 bg-opacity-50 dark:bg-slate-800'    : 'text-opacity-90 bg-gray-100 bg-opacity-50 dark:bg-slate-900'"
-                class="px-3 h-9 flex items-center  text-gray-700 dark:text-slate-400  text-sm rounded-md   ltr:ml-2 rtl:mr-2 focus:outline-none"
-                @click="filterOpen = !filterOpen"
-            >
-              <i class="la la-filter mr-1"></i>
-              <span>Filtreler</span>
-              <div v-if="activeFilterCount > 0 " class="rounded-full h-5 bg-blue-500 text-white text-xs px-2 ml-1">
-                {{ activeFilterCount }}
-              </div>
-            </button>
-
             <slot name="actions"></slot>
           </template>
         </UiDataHeader>
         <slot name="filter"></slot>
       </div>
-
-      <Filters
-          :open="filterOpen"
-          :filters="config.filters ?? []"
-          @filter="filter($event)"
-          @filterChange="activeFilterCount = $event"
-          @closeFilters="filterOpen = false"
-      />
 
 
       <div class=" bg-white dark:bg-slate-800 shadow rounded-md  overflow-hidden border border-gray-200 dark:border-gray-600">
@@ -209,8 +189,6 @@ export default {
       error: {
         license: false
       },
-      filterOpen: false,
-      activeFilterCount: 0,
       data: [],
       paging: {
         total: 0,
@@ -351,6 +329,10 @@ export default {
 
 
           this.currentPage = 1;
+          if(params.search){
+            this.requestBody.search = params.search;
+            delete params.search;
+          }
           this.requestBody.filters = params;
 
           this.get()

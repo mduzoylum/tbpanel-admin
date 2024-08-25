@@ -1,7 +1,7 @@
 <template>
     <div class="fixed inset-0 overflow-hidden z-40" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" v-if="visible">
         <div class="absolute inset-0 overflow-hidden">
-            <div :class="{'opacity-100' : visible , 'opacity-0' : !visible}" @click="visible=!visible" class="absolute inset-0 bg-gray-500 bg-opacity-75 "></div>
+            <div :class="{'opacity-100' : visible , 'opacity-0' : !visible}" @click="closable ? visible=!visible : ''" class="absolute inset-0 bg-gray-500 bg-opacity-75 "></div>
             <div :class="positionClass[position]" class="fixed inset-y-0 max-w-full flex">
                 <div :class="[{'translate-x-0' : visible , 'translate-x-full' : !visible },sizeOpts[size].width ,index]" class="relative w-screen " >
                     <div class="h-full flex flex-col  bg-white dark:bg-slate-800 shadow-xl overflow-y-scroll">

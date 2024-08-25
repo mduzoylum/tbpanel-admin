@@ -71,15 +71,14 @@ export default {
           {
             'index': 'status',
             'label': 'Durum',
+            'base' : true,
             'type': 'select',
-            'options': [
-              {label: 'Aktif', value: '1'},
-              {label: 'Pasif', value: '0'}
-            ]
+            'api': '/products'
           },
           {
             'index': 'stock_group',
             'label': 'Stok Grubu',
+            'base' : true,
             'type': 'select',
             'options': [
               {label: 'Aktif', value: '1'},
@@ -90,6 +89,7 @@ export default {
             'index': 'stock_type',
             'label': 'Stok Tipi',
             'type': 'select',
+            searchable: true,
             'options': [
               {label: 'Aktif', value: '1'},
               {label: 'Pasif', value: '0'}
