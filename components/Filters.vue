@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mt-1space-y-2">
+  <div class="relative mt-1space-y-2 mb-10">
     <div>
 
 
@@ -56,19 +56,6 @@
                      class="px-3 py-2 text-sm border border-slate-300 focus:outline-none focus:ring-offset-0 focus:ring-0 rounded-md  max-w-32"/>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="justify-between flex mt-2">
-        <button class="bg-gray-600 text-white px-5 py-2 text-sm mr-11 rounded-md" @click="resetFilters">
-          Filtrelere Sıfırla
-        </button>
-        <div class="flex space-x-2">
-          <div class="group flex"></div>
-          <button v-if="filters.length > 0" @click="resetFilters" :disabled="activeFilterCount > 0 ? false : true"
-                  class="bg-blue-500 text-white px-5 py-2 text-sm mr-11 rounded-md"
-                  :class="activeFilterCount > 0 ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-300 cursor-not-allowed'">
-            Filtrele
-          </button>
         </div>
       </div>
     </div>

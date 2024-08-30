@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div class="flex flex-col">
       <div v-if="!hideTitle">
@@ -14,7 +15,6 @@
         </UiDataHeader>
         <slot name="filter"></slot>
       </div>
-
 
       <div class=" bg-white dark:bg-slate-800 shadow rounded-md  overflow-hidden border border-gray-200 dark:border-gray-600">
         <div class="-my-2 overflow-x-auto ">
@@ -43,7 +43,7 @@
                   <th :title="column.title || column.label" v-show="!column.hidden"
                       v-for="(column, index) in config.columns" :key="index"
                       class="border-l first:border-0 dark:border-0 text-left text-sm font-medium  tracking-wider"
-                      :class="[sizeOpts[size].padding, sizeOpts[size].font]">
+                      :class="[column?.headClass || '', sizeOpts[size].padding, sizeOpts[size].font]">
                     <div :class="column?.class"
                          class="whitespace-nowrap overflow-hidden flex">
                       <span> {{ column.label }}</span>
@@ -107,15 +107,18 @@
                 </tbody>
               </table>
             </div>
-
-            <UiPagination v-if="hasData && paging && paging.total > paging.limit"
-                          ref="pagination"
-                          class="p-2"
-                          :data="paging" @change="get" v-model="currentPage"
-                          :size="size =='xsmall' ? 'small' :'default' "
-            />
           </div>
         </div>
+
+
+
+
+        <UiPagination v-if="hasData && paging && paging.total > paging.limit"
+                      ref="pagination"
+                      class="p-2"
+                      :data="paging" @change="get" v-model="currentPage"
+                      :size="size =='xsmall' ? 'small' :'default' "
+        />
       </div>
     </div>
 

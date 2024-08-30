@@ -15,8 +15,8 @@
       :close-on-select="false"
       :hide-selected="true"
       :classes="multiselectClasses"
-      noOptionsText="Bulunamadı"
-      noResultsText="Bulunamadı.."
+      :noOptionsText="showNotFoundText ? 'Sonuç bulunamadı' : ''"
+      :noResultsText="showNotFoundText ? 'Sonuç bulunamadı' : ''"
       @search-change="getOptionsFromApi">
     <template #selection="{ values, search, isOpen }">
         <span class="multiselect__single"
@@ -24,7 +24,7 @@
               v-show="!isOpen">{{ values.length }} tane seçildi</span>
     </template>
     <template #afterlist>
-      <div class="text-center">
+      <div v-if="api" class="text-center">
         <span class="text-xs text-gray-500">Devamı için arama yapınız.</span>
       </div>
     </template>
@@ -54,8 +54,8 @@ export default {
     },
   },
   data() {
-
     return {
+      showNotFoundText: !this.api,
       selecteds: [],
       selectOptions: [],
       isLoading: false,
@@ -100,10 +100,7 @@ export default {
       this.isLoading = true;
       this.$apiFetch(url)
           .then((response) => {
-            this.isLoading = false;
             this.selectOptions = response.data.map((item) => {
-
-              console.log(item);
               return {
                 label: item.name,
                 value: item.id,
@@ -111,8 +108,11 @@ export default {
             });
           })
           .catch((error) => {
-            this.isLoading = false;
             this.selectOptions = [];
+          })
+          .finally(() => {
+            this.isLoading = false;
+            this.showNotFoundText = true;
           });
     },
   },

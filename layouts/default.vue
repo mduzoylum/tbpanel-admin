@@ -59,11 +59,13 @@
             <img class="w-auto" src="/logo.png" :alt="this.$config.public.APP_NAME"/>
           </div>
           <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
-            <a v-for="item in navigation" :key="item.name" :href="item.href"
-               :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+
+            <NuxtLink v-for="item in navigation" :key="item.name" :to="item.to"
+                      :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
               <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true"/>
               {{ item.name }}
-            </a>
+            </NuxtLink>
+
           </nav>
         </div>
         <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
@@ -115,13 +117,13 @@ import {
 } from '@heroicons/vue/outline'
 
 const navigation = [
-  {name: 'Anasayfa', href: '#', icon: HomeIcon, current: true},
-  {name: 'Stok', href: '#', icon: ShoppingBagIcon, current: false},
-  {name: 'Cari', href: '#', icon: UserGroupIcon, current: false},
-  {name: 'Satış', href: '#', icon: ChartBarIcon, current: false},
-  {name: 'Alış', href: '#', icon: ChartPieIcon, current: false},
-  {name: 'Kullanıcılar', href: '#', icon: UsersIcon, current: false},
-  {name: 'Mesajlar', href: 'message', icon: ShoppingBagIcon, current: false},
+  {name: 'Anasayfa', to: '/', icon: HomeIcon, current: true},
+  {name: 'Ürünler', to: '/products', icon: ShoppingBagIcon, current: false},
+  {name: 'Cari', to: '#', icon: UserGroupIcon, current: false},
+  {name: 'Satış', to: '#', icon: ChartBarIcon, current: false},
+  {name: 'Alış', to: '#', icon: ChartPieIcon, current: false},
+  {name: 'Kullanıcılar', to: '#', icon: UsersIcon, current: false},
+  {name: 'Mesajlar', to: '/message', icon: ShoppingBagIcon, current: false},
 ]
 
 export default {

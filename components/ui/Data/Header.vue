@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-slate-800 data-grid-nav  block md:flex items-center justify-between mb-2">
+  <div class="bg-gray-50 dark:bg-gray-900 data-grid-nav block md:flex items-center justify-between mb-2 rounded-lg p-2">
     <h1 :class="['text-'+$color+'-500']" class="text-sm md:text-xl mb-2 md:mb-0 " v-if="title != '' && titleIcon != ''">
       <i :class="titleIcon" class="la"></i>
       {{ title }}
@@ -11,7 +11,6 @@
       <div class="flex rtl:flex-row-reverse rounded-md">
         <FilterAll :filters="config.filters" @filter="sendEvent('filter',$event)"></FilterAll>
       </div>
-
       <slot name="actions"></slot>
     </div>
   </div>
@@ -49,5 +48,4 @@ export default {
     }
   }
 }
-
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto sm:px-6 lg:px-8 lg:grid">
+  <div class="mx-auto sm:px-6 lg:px-8">
 
     <main class="md:col-span-12">
 
@@ -12,11 +12,56 @@
               :apiOpts="{ method: 'GET', body: {  } }"
               :config="config"
               title="Stok Listesi"
-              titleIcon="la-ticket"
+              titleIcon="la-shopping-bag"
           >
-
-            <template #actions>
+            <template #image="item">
+              <img :src="'https://fabrika.toptancimburada.com/img/C/' + item.stock_code" alt="" class="w-full">
             </template>
+            <template #stock_name="item">
+              <div class="">
+                <p class="text-xs text-gray-500">{{ item.model_code }}</p>
+                <p class="font-medium">{{ item.name }}</p>
+                <p v-if="item.attributes && item.attributes.length > 0" class="text-size-base text-bold text-black">
+                  <i class="las la-tag text-blue-500"></i>
+                  {{ item.attributes[0].attribute_option?.name }}
+                </p>
+              </div>
+
+            </template>
+
+            <template #unit="item">
+              <span class="text-sm">{{ item.unit?.name }}</span>
+            </template>
+
+            <template #status="item">
+              <span class="text-sm">{{ item.status?.name ?? '---' }}</span>
+            </template>
+
+            <template #cost_price="item">
+              <span class="text-sm">{{ item.prices?.cost_price }}</span>
+            </template>
+
+            <template #market_cost_price="item">
+              <UiDataPrice :prices="item.prices" type="market_cost_price"/>
+            </template>
+
+            <template #online_sale_price="item">
+              <UiDataPrice :prices="item.prices" type="online_sale_price"/>
+            </template>
+
+            <template #discounted_online_sale_price="item">
+              <UiDataPrice :prices="item.prices" type="discounted_online_sale_price"/>
+            </template>
+
+            <template #credit_card_sale_price="item">
+              <UiDataPrice :prices="item.prices" type="credit_card_sale_price"/>
+            </template>
+
+            <template #store_sale_price="item">
+              <UiDataPrice :prices="item.prices" type="store_sale_price"/>
+            </template>
+
+
           </UiDataTable>
           <UiNotification ref="notify"></UiNotification>
         </div>
@@ -29,9 +74,10 @@
 
 
 import Filters from "~/components/Filters.vue";
+import Price from "~/components/ui/Data/Price.vue";
 
 export default {
-  components: {Filters},
+  components: {Price, Filters},
   data() {
     return {
       filtersObject: {},
@@ -40,45 +86,108 @@ export default {
         searchable: true,
         columns: [
           {
+            'index': 'code',
+            'label': "",
+            'slot': 'image',
+            'headClass': 'max-w-16',
+            'class': 'w-16'
+          },
+          {
             'index': 'name',
             'label': "Stok Adı",
+            'slot': 'stock_name',
+          },
+          {
+            'index': 'demand_quantity',
+            'label': "Talep Edilen",
+            'headClass': 'w-8',
+            'class': 'text-center'
           },
           {
             'index': 'quantity',
             'label': "Mevcut Stok",
+            'headClass': 'w-8',
+            'class': 'text-center'
           },
           {
-            'index': 'model_code',
-            'label': "Kodu",
-          }
-        ],
-        actions: [
-          {
-            'label': 'Düzenle',
-            'icon': 'la-edit',
-            'color': 'blue',
-            'action': 'edit'
+            'index': 'quantity',
+            'label': "Sipariş",
+            'headClass': 'w-8',
+            'class': 'text-center'
           },
           {
-            'label': 'Sil',
-            'icon': 'la-trash',
-            'color': 'red',
-            'action': 'delete'
-          }
+            'index': 'target_quantity',
+            'label': "İstenilen Stok",
+            'headClass': 'w-8',
+            'class': 'text-center'
+          },
+          {
+            'index': 'entered_quantity',
+            'label': "Giren Miktarı",
+            'headClass': 'w-8',
+            'class': 'text-center'
+          },
+          {
+            'index': 'sale_quantity',
+            'label': "Satış",
+            'headClass': 'w-8',
+            'class': 'text-center'
+          },
+          {
+            'index': 'unit',
+            'label': "Birim",
+            'slot': 'unit'
+          },
+          {
+            'index': 'status',
+            'label': "Durum",
+            'slot': 'status'
+          },
+          {
+            'index': 'prices',
+            'label': "Alış F.",
+            'slot': 'cost_price'
+          },
+          {
+            'index': 'prices',
+            'label': "Piy. Al. F.",
+            'slot': 'market_cost_price'
+          },
+          {
+            'index': 'prices',
+            'label': "İnt. Sat. F.",
+            'slot': 'online_sale_price'
+          },
+          {
+            'index': 'prices',
+            'label': "İnt. İnd. Sat. F.",
+            'slot': 'discounted_online_sale_price'
+          },
+          {
+            'index': 'prices',
+            'label': "K. Kartı Sat. F.",
+            'slot': 'credit_card_sale_price'
+          },
+          {
+            'index': 'prices',
+            'label': "Mağ. Sat. F.",
+            'slot': 'store_sale_price'
+          },
+
         ],
 
         filters: [
           {
             'index': 'status',
             'label': 'Durum',
-            'base' : true,
+            'base': true,
             'type': 'select',
             'api': '/products'
           },
           {
             'index': 'stock_group',
             'label': 'Stok Grubu',
-            'base' : true,
+            'base': true,
             'type': 'select',
             'options': [
               {label: 'Aktif', value: '1'},
@@ -89,6 +198,7 @@ export default {
             'index': 'stock_type',
             'label': 'Stok Tipi',
             'type': 'select',
+            'base': true,
             searchable: true,
             'options': [
               {label: 'Aktif', value: '1'},
