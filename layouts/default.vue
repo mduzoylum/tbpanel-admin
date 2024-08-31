@@ -122,7 +122,8 @@ const navigation = [
   {name: 'Cari', to: '#', icon: UserGroupIcon, current: false},
   {name: 'Satış', to: '#', icon: ChartBarIcon, current: false},
   {name: 'Alış', to: '#', icon: ChartPieIcon, current: false},
-  {name: 'Kullanıcılar', to: '#', icon: UsersIcon, current: false},
+  {name: 'Kullanıcılar', to: '/users', icon: UsersIcon, current: false},
+  {name: 'Tedarikçiler', to: '/suppliers', icon: UsersIcon, current: false},
   {name: 'Mesajlar', to: '/message', icon: ShoppingBagIcon, current: false},
 ]
 
